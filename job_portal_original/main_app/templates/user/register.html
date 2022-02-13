@@ -1,0 +1,48 @@
+{% include 'user/base.html' %}
+{% load static %}
+{% if request.session.page %}
+<script>
+    $('.nav-link').removeClass('active')
+    $('#'+'{{request.session.page}}').addClass('active')
+</script>
+{% endif %}
+{% block content %}
+<div class="container w-100">
+    <div class="row">
+      <div class="col">
+        <h1 style="position:relative;   top:20%; left:2%;">Register an account and be a Member</h1>
+        <br>
+        <div class="register-container rounded-2">
+            <form class="form-floating">
+              <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Username">
+                    <label for="floatingInput">Username</label>
+              </div>  
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+              </div>
+              <div class="form-floating  mb-3">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password">
+                <label for="floatingPassword">Confirm Password</label>
+              </div>
+              <br>
+              <br>
+                <button type="submit" class="btn btn-secondary  w-100">Login</button>
+                <br>
+                <br>
+                <br>
+                <p class="fw-lighter" style="font-size: 12px;">Register an account and be a member of our community. Find and Search Jobs now!</p>
+            </form>
+        </div>
+      </div>
+      <div class="col" style="height: 100vh; text-align: c;">
+        <img src="{% static 'images/job4.png' %}" alt="">
+      </div>
+    </div>
+  </div>
+{% endblock %}

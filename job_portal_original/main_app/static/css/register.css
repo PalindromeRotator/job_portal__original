@@ -1,0 +1,8 @@
+.register-container{
+    box-shadow: 0 0 50px black;
+    padding: 15px;
+    width: 60%;
+    position: relative;
+    top: 25%;
+    left: 10%;
+}
