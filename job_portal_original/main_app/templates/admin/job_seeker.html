@@ -1,0 +1,155 @@
+{% include 'admin/main_base.html' %}
+{% load static %}
+{% if request.session.page %}
+<script>
+    $('.nav-link').removeClass('active')
+    $('#'+'{{request.session.page}}').addClass('active')
+</script>
+{% endif %}
+{% block content %}
+<div class="container">
+    <br>
+    <h1 align="center">Job Seeker Lists</h1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job_seeker in job_seekers %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{job_seeker.firstname}} {{job_seeker.lastname}}</td>
+            <td>{{job_seeker.email}}</td>
+            <td>
+                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view_job_modal" onclick="get_data('{{job_seeker.id}}',
+                '{{job_seeker.username}}','{{job_seeker.firstname}}',
+                '{{job_seeker.lastname}}','{{job_seeker.gender}}','{{job_seeker.phone}}','{{job_seeker.skills}}',
+                '{{job_seeker.email}}','{{job_seeker.achievements}}','{{job_seeker.job_type}}')">Edit Job Seeker</button>
+                <button type="submit" class="btn btn-danger" onclick="delete_job_seeker('{{job_seeker.id}}')">Delete from list</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="view_job_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Job Seeker Info</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="../../static/images/user_profile.png" class="rounded mx-auto d-block" alt="..." width="200" height="200">
+        <div class="mb-3 mt-2 w-50">
+            <input class="form-control input mb-3" type="file" id="formFile">
+            <div class="form-floating mb-3 input">
+                <input type="text" class="form-control" id="username" placeholder="Username"  value="{{username}}">
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating mb-3 input">
+                <input type="text" class="form-control" id="firstname" placeholder="First Name"  value="{{firstname}}">
+                <label for="floatingInput">First Name</label>
+            </div> 
+            <div class="form-floating mb-3 input">
+                <input type="text" class="form-control" id="lastname" placeholder="Last Name"  value="{{lastname}}">
+                <label for="floatingInput">Last Name</label>
+            </div>
+            <div class="form-floating mb-3 input">
+                <input type="number" class="form-control" id="phone" placeholder="Phone Number"  value="{{phone}}">
+                <label for="floatingInput">Phone Number</label>
+            </div>    
+            <select class="form-select form-select-lg mb-3  input" aria-label=".form-select-lg example"  id="gender">
+                <option value="default">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+
+            </select>
+            <div class="form-floating mb-3 input">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com"  value="{{email}}" >
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3 input">
+                <input type="text" class="form-control" id="skills" placeholder="Skills"  value="{{skills}}" > 
+                <label for="floatingInput">Skills</label>
+            </div> 
+            <div class="form-floating mb-3 input">
+                <textarea class="form-control" placeholder="Add some achievements or certifications" id="achievements" style="height: 100px" >{{achievements}}</textarea>
+                <label for="floatingTextarea2">Certification/Achievements</label>
+              </div>
+            <select class="form-select form-select-lg mb-3 input" aria-label=".form-select-lg example"  id="job_type">
+                <option value="all">All</option>
+                <option value="part_time">Part Time</option>
+                <option value="full_time">Full Time</option>
+            </select>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="save_changes()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var id = ''
+    function get_data(id,username,firstname,lastname,gender,phone,email,skills,achievements,job_type){
+      this.id = id
+      $('#username').val(username)
+      $('#firstname').val(firstname)
+      $('#lastname').val(lastname)
+      $("#gender").val(gender);
+      $('#phone').val(phone)
+      $('#email').val(email)
+      $('#skills').val(skills)
+      $('#achievements').val(achievements)
+      $('#job_type').val(job_type);
+    }
+    function save_changes(){
+      var username = $('#username').val()
+        var firstname = $('#firstname ').val()
+        var lastname = $('#lastname').val()
+        var gender = $('#gender').find(":selected").val()
+        var phone = $('#phone').val()
+        var email = $('#email').val()
+        var skills = $('#skills').val()
+        var achievements = $('#achievements').val()
+        var job_type = $('#job_type').find(":selected").val()
+
+      window.location.href = "{% url 'edit_resume' %}" + "?username=" + username + 
+            "&user_id=" + id + "&firstname=" + firstname + "&lastname=" + lastname +
+            "&gender=" + gender + "&phone=" + phone + "&email=" + email + "&skills=" + skills +
+            "&achievements=" + achievements + "&job_type=" + job_type
+    }
+
+    $('#user_search_input').on('keyup', function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    type: 'get',
+    url: "/User/",
+    data: {
+      search: $('#user_search_input').val()
+    },
+    success: function (data) {
+      $('#table').html(data.rendered_table);
+    },
+    error: function (data) {
+      alert('have an error');
+    },
+  });
+});
+  </script>
+{% endblock %}

@@ -1,0 +1,132 @@
+{% include 'user/main_base.html' %}
+{% load static %}
+{% if request.session.page %}
+<script>
+    $('.nav-link').removeClass('active')
+    $('#'+'{{request.session.page}}').addClass('active')
+</script>
+{% endif %}
+{% block content %}
+<div class="container">
+    <div class="content rounded-2">
+        <img src="../../static/images/user_profile.png" class="rounded mx-auto d-block" alt="..." width="200" height="200">
+        <div class="mb-3 mt-2 w-50">
+            <input class="form-control input mb-3" type="file" id="formFile">
+            <div class="form-floating mb-3 input">
+                <input type="text" class="form-control" id="username" placeholder="Username" disabled value="{{username}}">
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating mb-3 input">
+                <input type="text" class="form-control" id="firstname" placeholder="First Name" disabled value="{{firstname}}">
+                <label for="floatingInput">First Name</label>
+            </div> 
+            <div class="form-floating mb-3 input">
+                <input type="text" class="form-control" id="lastname" placeholder="Last Name" disabled value="{{lastname}}">
+                <label for="floatingInput">Last Name</label>
+            </div>
+            <div class="form-floating mb-3 input">
+                <input type="number" class="form-control" id="phone" placeholder="Phone Number" disabled value="{{phone}}">
+                <label for="floatingInput">Phone Number</label>
+            </div>    
+            <select class="form-select form-select-lg mb-3  input" aria-label=".form-select-lg example" disabled id="gender">
+                {% if gender == 'default' %}
+                <option value="default" selected>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                {% elif gender == 'male' %}
+                <option value="default">Select Gender</option>
+                <option value="male" selected>Male</option>
+                <option value="female">Female</option>
+                {% elif gender == 'female' %}
+                <option value="default">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female" selected>Female</option>
+                {% endif %}
+            </select>
+            <div class="form-floating mb-3 input">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" disabled value="{{email}}" >
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3 input">
+                <input type="text" class="form-control" id="skills" placeholder="Skils" disabled value="{{skills}}" > 
+                <label for="floatingInput">Skills</label>
+            </div> 
+            <div class="form-floating mb-3 input">
+                <textarea class="form-control" placeholder="Add some achievements or certifications" id="achievements" style="height: 100px" disabled>{{achievements}}</textarea>
+                <label for="floatingTextarea2">Certification/Achievements</label>
+              </div>
+            <select class="form-select form-select-lg mb-3 input" aria-label=".form-select-lg example" disabled id="job_type">
+                {% if job_type == 'all' %}
+                <option value="all" selected>All</option>
+                <option value="part_time">Part Time</option>
+                <option value="full_time">Full Time</option>
+                {% elif job_type == 'part_time' %}
+                <option value="part_time">All</option>
+                <option value="part_time" selected>Part Time</option>
+                <option value="full_time">Full Time</option>
+                {% elif job_type == 'full_time' %}
+                <option value="part_time">All</option>
+                <option value="part_time">Part Time</option>
+                <option value="full_time" selected>Full Time</option>
+                {% endif %}
+            </select>
+            <div class="d-flex p-2 bd-highlight">
+                <button type="button" id="edit" class="btn btn-outline-primary input" style="margin-right: 10px;" onclick="edit_resume('{{request.session.user_id}}')">Edit Resume</button>
+                <button type="button" class="btn btn-outline-danger input" onclick="delete_user()">Delete Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function edit_resume(user_id){
+        var username = $('#username').val()
+        var firstname = $('#firstname ').val()
+        var lastname = $('#lastname').val()
+        var gender = $('#gender').find(":selected").val()
+        var phone = $('#phone').val()
+        var email = $('#email').val()
+        var skills = $('#skills').val()
+        var achievements = $('#achievements').val()
+        var job_type = $('#job_type').find(":selected").val()
+        if($('#edit').html() == "Save Changes")
+        {
+            $('input').prop('disabled',true)
+            $('select').prop('disabled',true)
+            $('textarea').prop('disabled',true)
+            $('#edit').html('Edit Resume')
+            $('#edit').removeClass('btn-outline-success')
+            $('#edit').addClass('btn-outline-primary')
+            window.location.href = "{% url 'edit_resume' %}" + "?username=" + username + 
+            "&user_id=" + user_id + "&firstname=" + firstname + "&lastname=" + lastname +
+            "&gender=" + gender + "&phone=" + phone + "&email=" + email + "&skills=" + skills +
+            "&achievements=" + achievements + "&job_type=" + job_type
+        }
+        else if($('#edit').html() == "Edit Resume"){
+            $('input').prop('disabled',false)
+            $('select').prop('disabled',false)
+            $('textarea').prop('disabled',false)
+            $('#edit').html('Save Changes')
+            $('#edit').removeClass('btn-outline-primary')
+            $('#edit').addClass('btn-outline-success')
+        }
+        
+    }
+
+    function delete_account(){
+        Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        denyButtonText: `Don't save`,
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            Swal.fire('Saved!', '', 'success')
+        } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+        }
+        })
+    }
+</script>
+{% endblock %}

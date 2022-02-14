@@ -1,0 +1,26 @@
+
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Job Title</th>
+        <th scope="col">Skill/s</th>
+        <th scope="col">City</th>
+        <th scope="col">Country</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+       {% for job in jobs %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{job.job_title}}</td>
+        <td>{{job.skills}}</td>
+        <td>{{job.city}}</td>
+        <td>{{job.country}}</td>
+        <td>
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view_job_modal" onclick="get_details('{{job.job_details}}','{{job.job_id}}')">View this Job</button>
+            <button type="submit" class="btn btn-danger" onclick="delete_job()">Delete from list</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>

@@ -1,0 +1,53 @@
+{% include 'admin/main_base.html' %}
+{% load static %}
+{% if request.session.page %}
+<script>
+    $('.nav-link').removeClass('active')
+    $('#'+'{{request.session.page}}').addClass('active')
+</script>
+{% endif %}
+{% block content %}
+<div class="container">
+    <br>
+    <h1 align="center">Activity Logs</h1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Activity</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="view_job_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

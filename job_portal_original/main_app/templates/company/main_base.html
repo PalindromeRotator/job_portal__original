@@ -10,41 +10,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <link rel="stylesheet" href="{% static 'css/resume.css' %}">
+    <script src="{% static 'js/delete_user.js' %}"></script>
+    <script src="{% static 'js/delete_job.js' %}"></script>
     <!--Login css-->
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <link rel="stylesheet" href="{% static 'css/register.css' %}">
     <title>Document</title>
 </head>
 <body>
     <!--Top navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#" title="home">
+          <a class="navbar-brand" href="{% url 'mainpage' %}" title="home">
             <img src="{% static 'images/logo.png' %}" alt="" width="50" height="50">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
-          <form class="d-flex">
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'company_mainpage' %}" id="company_mainpage">Main</a>
+              </li>
+            </ul>
+          </div>
+          <div class="d-flex">
             <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'login' %}" id="login">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}" id="register">Register</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                  </li>
-                </ul>
-              </div>
-          </form>
+            <p style="color: white; padding: 10px 10px 0px 0px;">Hello, {{request.session.company_name}}</p>
+            <button class="btn btn-outline-danger" type="submit" onclick="logout()">Logout</button>
+          </div>
         </div>
       </nav>
       
     {% block content %}
     {% endblock %}
+    <script>
+      function logout(){  
+        window.location.href = "{% url 'logout' %}"
+      }
+    </script>
 </body>
 </html>
