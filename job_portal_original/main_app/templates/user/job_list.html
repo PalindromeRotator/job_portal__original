@@ -36,7 +36,7 @@
             <td>{{job.country}}</td>
             <td>
                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view_job_modal">View this Job</button>
-                <button type="submit" class="btn btn-danger" onclick="delete_job()">Delete from list</button>
+                <button type="submit" class="btn btn-danger" onclick="delete_job_list('{{job.job_id_get}}')">Delete from list</button>
             </td>
           </tr>
           {% endif %}

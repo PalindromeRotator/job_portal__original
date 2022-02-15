@@ -49,7 +49,7 @@
             <td>{{job.job_type}}</td>
             <td>
                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view_job_modal" onclick="get_details('{{job.job_details}}','{{job.job_id}}')">View this Job</button>
-                <button type="submit" class="btn btn-danger" onclick="delete_job()">Delete from list</button>
+                <!-- <button type="submit" class="btn btn-danger" onclick="delete_job()">Delete from list</button> -->
             </td>
           </tr>
           {% endfor %}
@@ -127,7 +127,7 @@
             <td>{{job.job_type}}</td>\
             <td>\
                 <button type='submit' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#view_job_modal' onclick='get_details('{{job.job_details}}','{{job.job_id}}')'>View this Job</button>\
-                <button type='submit' class='btn btn-danger' onclick='delete_job()'>Delete from list</button>\
+                \
             </td>\
           </tr>\
           {% endfor %}"
@@ -177,7 +177,7 @@
             <td>"+value2['job_type']+"</td>\
             <td>\
                 <button type='submit' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#view_job_modal' onclick='get_details('{{job.job_details}}','{{job.job_id}}')'>View this Job</button>\
-                <button type='submit' class='btn btn-danger' onclick='delete_job()'>Delete from list</button>\
+                \
             </td>\
           </tr>"
         
@@ -217,7 +217,7 @@ $("#filter").change(function() {
             <td>{{job.job_type}}</td>\
             <td>\
                 <button type='submit' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#view_job_modal' onclick='get_details('{{job.job_details}}','{{job.job_id}}')'>View this Job</button>\
-                <button type='submit' class='btn btn-danger' onclick='delete_job()'>Delete from list</button>\
+                \
             </td>\
           </tr>\
           {% endfor %}"
@@ -268,7 +268,7 @@ $("#filter").change(function() {
             <td>"+value2['job_type']+"</td>\
             <td>\
                 <button type='submit' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#view_job_modal' onclick='get_details('{{job.job_details}}','{{job.job_id}}')'>View this Job</button>\
-                <button type='submit' class='btn btn-danger' onclick='delete_job()'>Delete from list</button>\
+                \
             </td>\
           </tr>"
         

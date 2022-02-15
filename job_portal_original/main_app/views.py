@@ -282,6 +282,10 @@ def delete_job(request):
     job_id = request.GET.get('job_id')
     Job.objects.filter(job_id=job_id).delete()
     return redirect(request.META['HTTP_REFERER'])
+def delete_job_list(request):
+    job_id = request.GET.get('job_id')
+    Job_list.objects.filter(job_id_get=job_id).delete()
+    return redirect(request.META['HTTP_REFERER'])
 def delete_company(request):
     company_id = request.GET.get('company_id')
     Company.objects.filter(company_id=company_id).delete()
